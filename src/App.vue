@@ -262,6 +262,8 @@ const submitForm = handleSubmit(async (formValues) => {
   }
 });
 
+const cvLink = '/docs/CV_SEGERIE_Reynalde.pdf';
+
 </script>
 
 <template>
@@ -271,13 +273,14 @@ const submitForm = handleSubmit(async (formValues) => {
       <section class="section section-hero">
         <div class="section-card hero-card">
           <div class="section-inner">
-            <Avatar image="/img/reynalde-cv.jpg" shape="circle" class="hero-avatar" />
+            <Avatar image="/img/reynalde-cv.jpg"  class="hero-avatar" />
             <div class="hero-content">
               <h1 class="hero-title">{{ profil.nom.toUpperCase() }}</h1>
               <h2 class="hero-subtitle">{{ profil.titre }}</h2>
               <div class="hero-actions">
                 <Button label="LinkedIn" icon="pi pi-linkedin" severity="secondary" rounded as="a" :href="profil.contact.linkedin" target="_blank" />
                 <Button label="Me contacter" icon="pi pi-envelope" rounded as="a" href="#contact" />
+                <Button label="Télécharger CV" icon="pi pi-download" rounded severity="help" as="a" :href="cvLink" download />
               </div>
             </div>
           </div>
@@ -338,7 +341,7 @@ const submitForm = handleSubmit(async (formValues) => {
       <div class="section-card mb-6">
         <div class="grid projets-grid">
           <div v-for="p in professionalsProjects" :key="p.title" class="col-12 md:col-6">
-            <Card class="projet-card h-full">
+            <Card class="projet-card">
               <template #title>
                 <div class="flex justify-content-between align-items-start gap-3">
                   <span class="text-white text-lg font-bold">{{ p.title }}</span>
@@ -375,7 +378,7 @@ const submitForm = handleSubmit(async (formValues) => {
       <div class="section-card mb-6">
         <div class="grid projets-grid">
           <div v-for="p in academicsProjects" :key="p.title" class="col-12 md:col-6 lg:col-6">
-            <Card class="projet-card h-full surface-card">
+            <Card class="projet-card">
               <template #title>
                 <div class="flex justify-content-between align-items-start gap-3">
                   <span class="text-white text-lg font-bold">{{ p.title }}</span>
@@ -450,36 +453,6 @@ const submitForm = handleSubmit(async (formValues) => {
           </div>
         </div>
 
-        <div class="section-header mt-6"></div>
-
-        <div class="section-card p-0 overflow-hidden"> 
-          <Carousel 
-            :value="skills" 
-            :numVisible="1" 
-            :numScroll="1" 
-            :circular="true" 
-            :autoplayInterval="4000" 
-            :showIndicators="true"
-            :showNavigators="false"
-            class="custom-skill-carousel"
-          >
-            <template #item="slotProps">
-              <div class="p-4">
-                <h4 class="text-primary mb-4 text-center font-bold uppercase tracking-wider text-sm">
-                  {{ slotProps.data.category }}
-                </h4>
-                
-                <div v-for="skill in slotProps.data.items" :key="skill.name" class="mb-4">
-                  <div class="flex justify-content-between mb-2">
-                    <span class="text-slate-200 text-sm font-medium">{{ skill.name }}</span>
-                    <span class="text-primary text-xs font-bold">{{ skill.level }}%</span>
-                  </div>
-                  <ProgressBar :value="skill.level" :showValue="false" style="height: 6px"></ProgressBar>
-                </div>
-              </div>
-            </template>
-          </Carousel>
-        </div>
 
         <div class="section-header mt-6">
           <span class="section-num">—</span>
@@ -726,8 +699,7 @@ const submitForm = handleSubmit(async (formValues) => {
 }
 
 .hero-avatar {
-  border: 3px solid #3b82f6 !important;
-  box-shadow: 0 0 40px rgba(59, 130, 246, 0.2) !important;
+  border: 3px solid #ffffff !important;
   width: 140px !important;
   height: 140px !important;
 }
@@ -760,7 +732,6 @@ const submitForm = handleSubmit(async (formValues) => {
   display: flex;
   flex-wrap: wrap;
   gap: 0.75rem;
-  justify-content: center;
   margin-top: 1rem;
   padding-top: 0.5rem;
 }
@@ -850,9 +821,8 @@ const submitForm = handleSubmit(async (formValues) => {
 }
 
 .content-grid {
-  display: grid;
-  grid-template-columns: 1fr;
-  gap: 2rem;
+  width: 100%;
+  overflow-x: hidden;
 }
 
 @media (min-width: 1024px) {
